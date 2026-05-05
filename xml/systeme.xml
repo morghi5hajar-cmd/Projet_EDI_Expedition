@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<expedition
+  xmlns:fourn="http://maroctech.ma/fournisseur"
+  xmlns:transp="http://dhlmaroc.ma/transporteur">
+
+  <!-- ===================== BON DE COMMANDE (Namespace Fournisseur) ===================== -->
+  <fourn:bonDeCommande>
+
+    <fourn:numeroCommande>CMD-2025-00471</fourn:numeroCommande>
+    <fourn:dateCommande>2025-04-28</fourn:dateCommande>
+
+    <fourn:fournisseur>
+      <fourn:nom>MarocTech SARL</fourn:nom>
+      <fourn:adresse>
+        <fourn:rue>12, Boulevard Zerktouni</fourn:rue>
+        <fourn:ville>Casablanca</fourn:ville>
+        <fourn:codePostal>20000</fourn:codePostal>
+        <fourn:pays>Maroc</fourn:pays>
+      </fourn:adresse>
+      <fourn:telephone>+212 522 334 455</fourn:telephone>
+      <fourn:email>commandes@maroctech.ma</fourn:email>
+    </fourn:fournisseur>
+
+    <fourn:client>
+      <fourn:nom>TechParis SA</fourn:nom>
+      <fourn:adresse>
+        <fourn:rue>45, Rue de la Paix</fourn:rue>
+        <fourn:ville>Paris</fourn:ville>
+        <fourn:codePostal>75002</fourn:codePostal>
+        <fourn:pays>France</fourn:pays>
+      </fourn:adresse>
+      <fourn:telephone>+33 1 42 86 00 00</fourn:telephone>
+      <fourn:email>achat@techparis.fr</fourn:email>
+    </fourn:client>
+
+    <fourn:lignesCommande>
+      <fourn:ligne numero="1">
+        <fourn:produit>
+          <fourn:reference>RT-4500-PRO</fourn:reference>
+          <fourn:designation>Routeur WiFi 6 Pro 4500Mbps</fourn:designation>
+          <fourn:quantite>50</fourn:quantite>
+          <fourn:prixUnitaire devise="EUR">89.99</fourn:prixUnitaire>
+          <fourn:poidsUnitaire unite="kg">0.85</fourn:poidsUnitaire>
+        </fourn:produit>
+      </fourn:ligne>
+      <fourn:ligne numero="2">
+        <fourn:produit>
+          <fourn:reference>CBL-ETH-CAT6</fourn:reference>
+          <fourn:designation>Câble Ethernet Cat6 2m</fourn:designation>
+          <fourn:quantite>100</fourn:quantite>
+          <fourn:prixUnitaire devise="EUR">3.50</fourn:prixUnitaire>
+          <fourn:poidsUnitaire unite="kg">0.10</fourn:poidsUnitaire>
+        </fourn:produit>
+      </fourn:ligne>
+    </fourn:lignesCommande>
+
+    <fourn:montantTotal devise="EUR">4849.50</fourn:montantTotal>
+    <fourn:conditionsLivraison>DAP Paris (Delivered At Place)</fourn:conditionsLivraison>
+
+  </fourn:bonDeCommande>
+
+  <!-- ===================== BORDEREAU D'EXPÉDITION (Namespace Transporteur) ===================== -->
+  <transp:bordereauExpedition>
+
+    <transp:numeroTracking>DHL-MA-2025-98734</transp:numeroTracking>
+    <transp:dateExpedition>2025-04-30</transp:dateExpedition>
+    <transp:dateLivraisonPrevue>2025-05-05</transp:dateLivraisonPrevue>
+
+    <transp:transporteur>
+      <transp:nom>DHL Maroc</transp:nom>
+      <transp:agence>Casablanca - Zone Industrielle</transp:agence>
+      <transp:contact>+212 522 999 000</transp:contact>
+    </transp:transporteur>
+
+    <transp:colis>
+      <transp:nombreColis>3</transp:nombreColis>
+      <transp:poidsTotal unite="kg">52.50</transp:poidsTotal>
+      <transp:dimensions unite="cm">
+        <transp:longueur>60</transp:longueur>
+        <transp:largeur>40</transp:largeur>
+        <transp:hauteur>35</transp:hauteur>
+      </transp:dimensions>
+      <transp:typeEmballage>Carton renforcé</transp:typeEmballage>
+    </transp:colis>
+
+    <transp:itineraire>
+      <transp:etape ordre="1">
+        <transp:lieu>Casablanca - Entrepôt DHL</transp:lieu>
+        <transp:statut>Pris en charge</transp:statut>
+        <transp:date>2025-04-30</transp:date>
+      </transp:etape>
+      <transp:etape ordre="2">
+        <transp:lieu>Aéroport Mohammed V - Casablanca</transp:lieu>
+        <transp:statut>En transit</transp:statut>
+        <transp:date>2025-05-01</transp:date>
+      </transp:etape>
+      <transp:etape ordre="3">
+        <transp:lieu>Hub DHL - Paris Charles de Gaulle</transp:lieu>
+        <transp:statut>En attente de livraison</transp:statut>
+        <transp:date>2025-05-03</transp:date>
+      </transp:etape>
+    </transp:itineraire>
+
+    <transp:statutActuel>En transit</transp:statutActuel>
+    <transp:serviceChoisi>Express International</transp:serviceChoisi>
+    <transp:referenceCommande>CMD-2025-00471</transp:referenceCommande>
+
+  </transp:bordereauExpedition>
+
+</expedition>
+
+
