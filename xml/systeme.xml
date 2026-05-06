@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<expedition
+<exp:expedition
+  xmlns:exp="http://expedition.ma/global"
   xmlns:fourn="http://maroctech.ma/fournisseur"
-  xmlns:transp="http://dhlmaroc.ma/transporteur">
+  xmlns:transp="http://dhlmaroc.ma/transporteur"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+  xsi:schemaLocation="
+  http://expedition.ma/global ../xsd/expedition.xsd
+  http://maroctech.ma/fournisseur ../xsd/fournisseur.xsd
+  http://dhlmaroc.ma/transporteur ../xsd/transporteur.xsd">
+
+  
 
   <!-- ===================== BON DE COMMANDE (Namespace Fournisseur) ===================== -->
   <fourn:bonDeCommande>
@@ -107,6 +116,4 @@
 
   </transp:bordereauExpedition>
 
-</expedition>
-
-
+</exp:expedition>
