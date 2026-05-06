@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema 
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:fourn="http://maroctech.ma/fournisseur"
+    xmlns:transp="http://dhlmaroc.ma/transporteur"
+    targetNamespace="http://expedition.ma/global"
+    xmlns:exp="http://expedition.ma/global"
+    elementFormDefault="qualified">
+
+  
+  <xs:import namespace="http://maroctech.ma/fournisseur" schemaLocation="fournisseur.xsd"/>
+  <xs:import namespace="http://dhlmaroc.ma/transporteur" schemaLocation="transporteur.xsd"/>
+   
+  <xs:element name="expedition" type="exp:expeditionType"/>
+
+    <xs:complexType name="expeditionType">
+        <xs:sequence>
+            <xs:element ref="fourn:bonDeCommande"/>
+            <xs:element ref="transp:bordereauExpedition"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>
