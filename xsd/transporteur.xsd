@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema 
+    targetNamespace="http://dhlmaroc.ma/transporteur"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://dhlmaroc.ma/transporteur"
+    elementFormDefault="qualified">
+  <xs:element name="bordereauExpedition">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="numeroTracking" type="xs:string" />
+        <xs:element name="dateExpedition" type="xs:date" />
+        <xs:element name="dateLivraisonPrevue" type="xs:date" />
+        <xs:element name="transporteur">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="nom" type="xs:string" />
+              <xs:element name="agence" type="xs:string" />
+              <xs:element name="contact" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="colis">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="nombreColis" type="xs:unsignedByte" />
+              <xs:element name="poidsTotal">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:decimal">
+                      <xs:attribute name="unite" type="xs:string" use="required" />
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="dimensions">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="longueur" type="xs:unsignedByte" />
+                    <xs:element name="largeur" type="xs:unsignedByte" />
+                    <xs:element name="hauteur" type="xs:unsignedByte" />
+                  </xs:sequence>
+                  <xs:attribute name="unite" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="typeEmballage" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="itineraire">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" name="etape">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="lieu" type="xs:string" />
+                    <xs:element name="statut" type="xs:string" />
+                    <xs:element name="date" type="xs:date" />
+                  </xs:sequence>
+                  <xs:attribute name="ordre" type="xs:unsignedByte" use="required" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="statutActuel" type="xs:string" />
+        <xs:element name="serviceChoisi" type="xs:string" />
+        <xs:element name="referenceCommande" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
