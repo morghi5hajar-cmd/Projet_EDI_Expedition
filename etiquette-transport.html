@@ -1,0 +1,568 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html xmlns:exp="http://expedition.ma/global" xmlns:fourn="http://maroctech.ma/fournisseur" xmlns:transp="http://dhlmaroc.ma/transporteur" lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Étiquette Transport – DHL-MA-2025-98734</title>
+<style>
+          /* ──────────────────────────────────────────────────────────
+             TYPOGRAPHIE  (Google Fonts – chargées depuis CDN)
+             Bebas Neue  : grands titres / numéros de tracking
+             IBM Plex Mono : codes, références, légendes
+             IBM Plex Sans : corps de texte
+          ────────────────────────────────────────────────────────── */
+          @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;600&display=swap');
+
+          /* ── Variables CSS ──────────────────────────────────────── */
+          :root {
+            --ink:     #0a0a0a;        /* noir quasi-pur */
+            --paper:   #f5f0e8;        /* ivoire doux */
+            --accent:  #d4380d;        /* rouge DHL / alerte */
+            --accent2: #1a3a5c;        /* bleu marine transporteur */
+            --mid:     #6b6b6b;        /* gris texte secondaire */
+            --border:  #0a0a0a;
+            --label-w: 148mm;          /* largeur étiquette A5 paysage */
+          }
+
+          /* ── Reset minimal ──────────────────────────────────────── */
+          *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+          /* ── Page (fond gris, centrage) ─────────────────────────── */
+          body {
+            background: #ccc8be;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            padding: 40px 20px;
+            font-family: 'IBM Plex Sans', sans-serif;
+            gap: 20px;
+            color: var(--ink);
+          }
+
+          /* ── Titre de page (affiché à l'écran, masqué à l'impression) */
+          .page-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 13px;
+            letter-spacing: 5px;
+            color: #666;
+            text-transform: uppercase;
+          }
+
+          /* ════════════════════════════════════════════════════════
+             CARTE ÉTIQUETTE
+          ════════════════════════════════════════════════════════ */
+          .label {
+            width: var(--label-w);
+            background: var(--paper);
+            border: 3px solid var(--border);
+            box-shadow: 8px 8px 0 rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+          }
+
+          /* ── En-tête transporteur ──────────────────────────────── */
+          .label-header {
+            background: var(--accent2);
+            color: #fff;
+            padding: 10px 14px 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            border-bottom: 3px solid var(--border);
+          }
+          .carrier-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 30px;
+            letter-spacing: 3px;
+            line-height: 1;
+          }
+          /* Badge service (ex : "Express International") */
+          .service-badge {
+            background: var(--accent);
+            color: #fff;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 8.5px;
+            font-weight: 600;
+            padding: 3px 9px;
+            border: 1.5px solid rgba(255,255,255,0.6);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            white-space: nowrap;
+          }
+          /* Logo EAN-COM (coin droit) */
+          .ean-badge {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 7px;
+            color: rgba(255,255,255,0.55);
+            text-align: right;
+            line-height: 1.5;
+          }
+
+          /* ── Bloc numéro de tracking ────────────────────────────── */
+          .tracking-block {
+            padding: 10px 14px 8px;
+            border-bottom: 2px solid var(--border);
+            background: #fff;
+          }
+          .tracking-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 7.5px;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            color: var(--mid);
+            margin-bottom: 2px;
+          }
+          .tracking-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 28px;
+            letter-spacing: 3px;
+            color: var(--ink);
+            line-height: 1;
+          }
+
+          /* ════════════════════════════════════════════════════════
+             ZONE QR CODE + CODE-BARRES
+             ──────────────────────────────────────────────────────
+             QR Code : pattern SVG fixe représentant visuellement
+             un QR code. Dans un contexte de production, on
+             utiliserait une librairie JS (qrcode.js) ou un
+             service API (api.qrserver.com?data=TRACKING_NUMBER).
+             Ici, le SVG est statique pour rester 100% XSLT 1.0
+             sans dépendance externe.
+
+             Code-barres : barres SVG simulant Code 128,
+             avec le numéro de tracking affiché en dessous.
+          ════════════════════════════════════════════════════════ */
+          .code-zone {
+            padding: 10px 14px;
+            border-bottom: 2px solid var(--border);
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            background: var(--paper);
+          }
+          /* Cadre du QR */
+          .qr-frame {
+            width: 80px;
+            height: 80px;
+            flex-shrink: 0;
+            border: 2.5px solid var(--border);
+            background: #fff;
+            padding: 4px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+          }
+          .qr-frame svg { width: 62px; height: 62px; display: block; }
+          .qr-caption {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 5.5px;
+            color: var(--mid);
+            text-align: center;
+            letter-spacing: 0.5px;
+          }
+          /* Côté code-barres */
+          .barcode-wrap {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+          }
+          .barcode-svg { width: 100%; height: 48px; display: block; }
+          .barcode-num {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 8px;
+            text-align: center;
+            color: var(--ink);
+            letter-spacing: 1.5px;
+          }
+          .barcode-std {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 6px;
+            text-align: center;
+            color: var(--mid);
+          }
+
+          /* ════════════════════════════════════════════════════════
+             ADRESSES : EXPÉDITEUR | DESTINATAIRE
+          ════════════════════════════════════════════════════════ */
+          .addresses {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-bottom: 2px solid var(--border);
+          }
+          .addr-block { padding: 9px 12px; }
+          .addr-block:first-child { border-right: 2px solid var(--border); }
+          .addr-role {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 7px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            margin-bottom: 5px;
+            font-weight: 600;
+          }
+          .addr-role.dest { color: var(--accent2); }
+          .addr-name {
+            font-weight: 600;
+            font-size: 10.5px;
+            color: var(--ink);
+            margin-bottom: 3px;
+          }
+          .addr-line {
+            font-size: 9px;
+            color: var(--mid);
+            line-height: 1.5;
+          }
+          .addr-phone {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 8px;
+            color: var(--mid);
+            margin-top: 4px;
+          }
+
+          /* ════════════════════════════════════════════════════════
+             GRILLE D'INFORMATIONS LOGISTIQUES
+          ════════════════════════════════════════════════════════ */
+          .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-bottom: 2px solid var(--border);
+          }
+          .info-cell {
+            padding: 6px 12px;
+            border-right: 1px solid #c8c0b0;
+            border-bottom: 1px solid #c8c0b0;
+          }
+          .info-cell:nth-child(2n) { border-right: none; }
+          .info-key {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 6.5px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--mid);
+            margin-bottom: 1px;
+          }
+          .info-val {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--ink);
+          }
+          .info-val.alert { color: var(--accent); }
+
+          /* ════════════════════════════════════════════════════════
+             TABLEAU PRODUITS
+          ════════════════════════════════════════════════════════ */
+          .products-section {
+            padding: 8px 12px;
+            border-bottom: 2px solid var(--border);
+          }
+          .section-title {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 7px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent2);
+            font-weight: 600;
+            margin-bottom: 5px;
+            padding-bottom: 3px;
+            border-bottom: 1.5px solid var(--border);
+          }
+          table.products {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 8px;
+          }
+          table.products th {
+            text-align: left;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 6.5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--mid);
+            padding: 2px 4px 4px;
+            border-bottom: 1px solid var(--border);
+          }
+          table.products td {
+            padding: 3px 4px;
+            color: var(--ink);
+            line-height: 1.4;
+            vertical-align: top;
+          }
+          table.products tr:nth-child(even) td { background: rgba(0,0,0,0.035); }
+          .ref-tag {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 7px;
+            color: var(--accent2);
+            background: rgba(26,58,92,0.08);
+            padding: 1px 3px;
+            border-radius: 2px;
+          }
+
+          /* ════════════════════════════════════════════════════════
+             ITINÉRAIRE / TIMELINE
+          ════════════════════════════════════════════════════════ */
+          .itinerary-section {
+            padding: 8px 12px;
+            border-bottom: 2px solid var(--border);
+          }
+          .timeline { display: flex; flex-direction: column; gap: 0; }
+          .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 5px 0;
+            position: relative;
+          }
+          /* Ligne de connexion entre étapes */
+          .step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 9px;
+            top: 20px;
+            width: 1.5px;
+            height: calc(100% - 8px);
+            background: var(--border);
+          }
+          .step-dot {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            background: #fff;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 8px;
+            font-weight: 600;
+            color: var(--ink);
+            z-index: 1;
+          }
+          /* Étape active (= statutActuel) */
+          .step-dot.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(212,56,13,0.2);
+          }
+          .step-info { flex: 1; padding-top: 1px; }
+          .step-lieu  { font-size: 9px; font-weight: 600; color: var(--ink); }
+          .step-statut{ font-size: 8px; color: var(--mid); margin-top: 1px; }
+          .step-date  {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 7px; color: var(--mid); margin-top: 1px;
+          }
+
+          /* ════════════════════════════════════════════════════════
+             PIED DE PAGE
+          ════════════════════════════════════════════════════════ */
+          .label-footer {
+            background: var(--ink);
+            color: #fff;
+            padding: 8px 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+          }
+          .footer-ref {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 7px;
+            letter-spacing: 1px;
+            color: #9a9a9a;
+            line-height: 1.7;
+          }
+          .footer-total {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 18px;
+            letter-spacing: 1px;
+            color: #fff;
+            text-align: center;
+          }
+          .footer-total small {
+            display: block;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 6.5px;
+            letter-spacing: 1px;
+            color: #9a9a9a;
+            font-weight: 400;
+          }
+          .footer-edi {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 6.5px;
+            color: #777;
+            text-align: right;
+            line-height: 1.8;
+          }
+
+          /* ════════════════════════════════════════════════════════
+             IMPRESSION (Ctrl+P)
+          ════════════════════════════════════════════════════════ */
+          @media print {
+            body { background: #fff; padding: 0; gap: 0; }
+            .label { box-shadow: none; border: 2px solid #000; width: 148mm; }
+            .page-title { display: none; }
+          }
+        </style>
+</head>
+<body>
+<p class="page-title">Étiquette de Transport · Standard EAN-COM / EDI</p>
+<div class="label">
+<div class="label-header">
+<span class="carrier-name">DHL Maroc</span><span class="service-badge">Express International</span><span class="ean-badge">EAN-COM<br>EDI STD</span>
+</div>
+<div class="tracking-block">
+<div class="tracking-label">Numéro de Suivi · Tracking Number</div>
+<div class="tracking-number">DHL-MA-2025-98734</div>
+</div>
+<div class="code-zone">
+<div class="qr-frame">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 21" fill="#0a0a0a"><rect x="0" y="0" width="7" height="7"></rect><rect x="1" y="1" width="5" height="5" fill="#f5f0e8"></rect><rect x="2" y="2" width="3" height="3"></rect><rect x="14" y="0" width="7" height="7"></rect><rect x="15" y="1" width="5" height="5" fill="#f5f0e8"></rect><rect x="16" y="2" width="3" height="3"></rect><rect x="0" y="14" width="7" height="7"></rect><rect x="1" y="15" width="5" height="5" fill="#f5f0e8"></rect><rect x="2" y="16" width="3" height="3"></rect><rect x="8" y="0" width="1" height="1"></rect><rect x="10" y="0" width="2" height="1"></rect><rect x="13" y="0" width="1" height="1"></rect><rect x="9" y="2" width="2" height="1"></rect><rect x="12" y="2" width="1" height="1"></rect><rect x="8" y="4" width="1" height="1"></rect><rect x="11" y="4" width="2" height="1"></rect><rect x="9" y="6" width="1" height="1"></rect><rect x="12" y="6" width="2" height="1"></rect><rect x="0" y="8" width="1" height="1"></rect><rect x="2" y="8" width="2" height="1"></rect><rect x="5" y="8" width="2" height="1"></rect><rect x="8" y="8" width="3" height="1"></rect><rect x="13" y="8" width="2" height="1"></rect><rect x="17" y="8" width="1" height="1"></rect><rect x="19" y="8" width="2" height="1"></rect><rect x="1" y="10" width="2" height="1"></rect><rect x="4" y="10" width="1" height="1"></rect><rect x="7" y="10" width="2" height="1"></rect><rect x="10" y="10" width="1" height="1"></rect><rect x="13" y="10" width="2" height="1"></rect><rect x="17" y="10" width="3" height="1"></rect><rect x="0" y="12" width="3" height="1"></rect><rect x="5" y="12" width="1" height="1"></rect><rect x="8" y="12" width="2" height="1"></rect><rect x="12" y="12" width="1" height="1"></rect><rect x="15" y="12" width="2" height="1"></rect><rect x="19" y="12" width="2" height="1"></rect><rect x="8" y="14" width="1" height="1"></rect><rect x="10" y="14" width="2" height="1"></rect><rect x="14" y="14" width="2" height="1"></rect><rect x="18" y="14" width="3" height="1"></rect><rect x="9" y="16" width="2" height="1"></rect><rect x="13" y="16" width="1" height="1"></rect><rect x="16" y="16" width="2" height="1"></rect><rect x="20" y="16" width="1" height="1"></rect><rect x="8" y="18" width="1" height="1"></rect><rect x="11" y="18" width="2" height="1"></rect><rect x="15" y="18" width="2" height="1"></rect><rect x="19" y="18" width="2" height="1"></rect><rect x="9" y="20" width="2" height="1"></rect><rect x="13" y="20" width="1" height="1"></rect><rect x="16" y="20" width="1" height="1"></rect><rect x="19" y="20" width="2" height="1"></rect></svg><div class="qr-caption">QR · TRACKING</div>
+</div>
+<div class="barcode-wrap">
+<svg xmlns="http://www.w3.org/2000/svg" class="barcode-svg" viewBox="0 0 200 48" preserveAspectRatio="none"><rect x="0" y="0" width="2" height="48" fill="#0a0a0a"></rect><rect x="4" y="0" width="1" height="48" fill="#0a0a0a"></rect><rect x="7" y="0" width="3" height="48" fill="#0a0a0a"></rect><rect x="12" y="0" width="1" height="48" fill="#0a0a0a"></rect><rect x="15" y="0" width="2" height="48" fill="#0a0a0a"></rect><rect x="20" y="0" width="1" height="48" fill="#0a0a0a"></rect><rect x="23" y="0" width="3" height="48" fill="#0a0a0a"></rect><rect x="28" y="0" width="1" height="48" fill="#0a0a0a"></rect><rect x="31" y="0" width="2" height="48" fill="#0a0a0a"></rect><rect x="35" y="0" width="1" height="48" fill="#0a0a0a"></rect><rect x="38" y="0" width="3" height="48" fill="#0a0a0a"></rect><rect x="43" y="0" width="2" height="48" fill="#0a0a0a"></rect><rect x="47" y="0" width="1" height="48" fill="#0a0a0a"></rect><rect x="50" y="0" width="2" height="48" fill="#0a0a0a"></rect><rect x="54" y="0" width="3" height="48" fill="#0a0a0a"></rect><rect x="59" y="0" width="1" height="48" fill="#0a0a0a"></rect><rect x="62" y="0" width="2" height="48" fill="#0a0a0a"></rect><rect x="66" y="0" width="1" height="48" fill="#0a0a0a"></rect><rect x="69" y="0" width="3" height="48" fill="#0a0a0a"></rect><rect x="74" y="0" width="1" height="48" fill="#0a0a0a"></rect><rect x="77" y="0" width="2" height="48" fill="#0a0a0a"></rect><rect x="81" y="0" width="3" height="48" fill="#0a0a0a"></rect><rect x="86" y="0" width="1" height="48" fill="#0a0a0a"></rect><rect x="89" y="0" width="2" height="48" fill="#0a0a0a"></rect><rect x="93" y="0" width="1" height="48" fill="#0a0a0a"></rect><rect x="96" y="0" width="3" height="48" fill="#0a0a0a"></rect><rect x="101" y="0" width="2" height="48" fill="#0a0a0a"></rect><rect x="105" y="0" width="1" height="48" fill="#0a0a0a"></rect><rect x="108" y="0" width="2" height="48" fill="#0a0a0a"></rect><rect x="112" y="0" width="3" height="48" fill="#0a0a0a"></rect><rect x="117" y="0" width="1" height="48" fill="#0a0a0a"></rect><rect x="120" y="0" width="2" height="48" fill="#0a0a0a"></rect><rect x="124" y="0" width="1" height="48" fill="#0a0a0a"></rect><rect x="127" y="0" width="3" height="48" fill="#0a0a0a"></rect><rect x="132" y="0" width="2" height="48" fill="#0a0a0a"></rect><rect x="136" y="0" width="1" height="48" fill="#0a0a0a"></rect><rect x="139" y="0" width="2" height="48" fill="#0a0a0a"></rect><rect x="143" y="0" width="3" height="48" fill="#0a0a0a"></rect><rect x="148" y="0" width="1" height="48" fill="#0a0a0a"></rect><rect x="151" y="0" width="2" height="48" fill="#0a0a0a"></rect><rect x="155" y="0" width="1" height="48" fill="#0a0a0a"></rect><rect x="158" y="0" width="3" height="48" fill="#0a0a0a"></rect><rect x="163" y="0" width="2" height="48" fill="#0a0a0a"></rect><rect x="167" y="0" width="1" height="48" fill="#0a0a0a"></rect><rect x="170" y="0" width="2" height="48" fill="#0a0a0a"></rect><rect x="174" y="0" width="3" height="48" fill="#0a0a0a"></rect><rect x="179" y="0" width="1" height="48" fill="#0a0a0a"></rect><rect x="182" y="0" width="2" height="48" fill="#0a0a0a"></rect><rect x="186" y="0" width="3" height="48" fill="#0a0a0a"></rect><rect x="191" y="0" width="1" height="48" fill="#0a0a0a"></rect><rect x="194" y="0" width="2" height="48" fill="#0a0a0a"></rect><rect x="198" y="0" width="2" height="48" fill="#0a0a0a"></rect></svg><div class="barcode-num">DHL-MA-2025-98734</div>
+<div class="barcode-std">Code 128 · EAN-COM</div>
+</div>
+</div>
+<div class="addresses">
+<div class="addr-block">
+<div class="addr-role">▲ Expéditeur (From)</div>
+<div class="addr-name">MarocTech SARL</div>
+<div class="addr-line">12, Boulevard Zerktouni</div>
+<div class="addr-line">20000 Casablanca</div>
+<div class="addr-line">Maroc</div>
+<div class="addr-phone">+212 522 334 455</div>
+</div>
+<div class="addr-block">
+<div class="addr-role dest">▼ Destinataire (To)</div>
+<div class="addr-name">TechParis SA</div>
+<div class="addr-line">45, Rue de la Paix</div>
+<div class="addr-line">75002 Paris</div>
+<div class="addr-line">France</div>
+<div class="addr-phone">+33 1 42 86 00 00</div>
+</div>
+</div>
+<div class="info-grid">
+<div class="info-cell">
+<div class="info-key">Date Expédition</div>
+<div class="info-val">2025-04-30</div>
+</div>
+<div class="info-cell">
+<div class="info-key">Livraison Prévue</div>
+<div class="info-val">2025-05-05</div>
+</div>
+<div class="info-cell">
+<div class="info-key">Nombre de Colis</div>
+<div class="info-val">3</div>
+</div>
+<div class="info-cell">
+<div class="info-key">Poids Total</div>
+<div class="info-val">52.50 kg</div>
+</div>
+<div class="info-cell">
+<div class="info-key">Dimensions (L × l × h)</div>
+<div class="info-val">60 × 40 × 35 cm</div>
+</div>
+<div class="info-cell">
+<div class="info-key">Type Emballage</div>
+<div class="info-val">Carton renforcé</div>
+</div>
+<div class="info-cell">
+<div class="info-key">Statut Actuel</div>
+<div class="info-val alert">En transit</div>
+</div>
+<div class="info-cell">
+<div class="info-key">Agence DHL</div>
+<div class="info-val">Casablanca - Zone Industrielle</div>
+</div>
+<div class="info-cell">
+<div class="info-key">N° Commande</div>
+<div class="info-val">CMD-2025-00471</div>
+</div>
+<div class="info-cell">
+<div class="info-key">Date Commande</div>
+<div class="info-val">2025-04-28</div>
+</div>
+</div>
+<div class="products-section">
+<div class="section-title">Contenu — Lignes de Commande</div>
+<table class="products">
+<thead><tr>
+<th>#</th>
+<th>Désignation</th>
+<th>Référence</th>
+<th>Qté</th>
+<th>Prix Unit.</th>
+<th>Poids/u</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Routeur WiFi 6 Pro 4500Mbps</td>
+<td><span class="ref-tag">RT-4500-PRO</span></td>
+<td>50</td>
+<td>89.99 EUR</td>
+<td>0.85 kg</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Câble Ethernet Cat6 2m</td>
+<td><span class="ref-tag">CBL-ETH-CAT6</span></td>
+<td>100</td>
+<td>3.50 EUR</td>
+<td>0.10 kg</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="itinerary-section">
+<div class="section-title">Itinéraire de Transport</div>
+<div class="timeline">
+<div class="step">
+<div class="step-dot">1</div>
+<div class="step-info">
+<div class="step-lieu">Casablanca - Entrepôt DHL</div>
+<div class="step-statut">Pris en charge</div>
+<div class="step-date">2025-04-30</div>
+</div>
+</div>
+<div class="step">
+<div class="step-dot active">2</div>
+<div class="step-info">
+<div class="step-lieu">Aéroport Mohammed V - Casablanca</div>
+<div class="step-statut">En transit</div>
+<div class="step-date">2025-05-01</div>
+</div>
+</div>
+<div class="step">
+<div class="step-dot">3</div>
+<div class="step-info">
+<div class="step-lieu">Hub DHL - Paris Charles de Gaulle</div>
+<div class="step-statut">En attente de livraison</div>
+<div class="step-date">2025-05-03</div>
+</div>
+</div>
+</div>
+</div>
+<div class="label-footer">
+<div class="footer-ref">
+<div>CMD : CMD-2025-00471</div>
+<div>DAP Paris (Delivered At Place)</div>
+</div>
+<div class="footer-total">4849.50 EUR<small>Montant Total</small>
+</div>
+<div class="footer-edi">
+              Standard EAN-COM<br>
+              EDI · ENSIAS SCL<br>+212 522 999 000</div>
+</div>
+</div>
+</body>
+</html>
