@@ -12,7 +12,7 @@
 
   
 
-  <!-- ===================== BON DE COMMANDE (Namespace Fournisseur) ===================== -->
+  <!--  BON DE COMMANDE (Namespace Fournisseur)  -->
   <fourn:bonDeCommande>
 
     <fourn:numeroCommande>CMD-2025-00471</fourn:numeroCommande>
@@ -68,7 +68,7 @@
 
   </fourn:bonDeCommande>
 
-  <!-- ===================== BORDEREAU D'EXPÉDITION (Namespace Transporteur) ===================== -->
+  <!--  BORDEREAU D'EXPÉDITION (Namespace Transporteur) -->
   <transp:bordereauExpedition>
 
     <transp:numeroTracking>DHL-MA-2025-98734</transp:numeroTracking>
